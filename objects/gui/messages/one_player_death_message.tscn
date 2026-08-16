@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://cm1i2ha1wpe15"]
+
+[ext_resource type="Script" uid="uid://clbr1wi8xs15p" path="res://scripts/gui/Message.cs" id="1_cn2sk"]
+
+[node name="OnePlayerDeathMessage" type="RichTextLabel" unique_id=1995168754]
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -95.0
+offset_bottom = 23.0
+grow_horizontal = 0
+bbcode_enabled = true
+text = "[color=red]Player 1[/color] fell."
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 2
+script = ExtResource("1_cn2sk")
+type = 1

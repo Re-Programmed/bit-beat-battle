@@ -1,0 +1,26 @@
+[gd_scene format=3 uid="uid://bx0xrfsj4inyh"]
+
+[ext_resource type="Script" uid="uid://odh0ri38qbd2" path="res://scripts/minigames/beat_floor/FloorSquareTile.cs" id="1_467n7"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_m0c6a"]
+size = Vector3(1.9921875, 0.07910156, 1.9775391)
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_467n7"]
+albedo_color = Color(1, 1, 0, 1)
+metallic_specular = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_467n7"]
+lightmap_size_hint = Vector2i(24, 16)
+size = Vector3(2, 0.075, 2)
+
+[node name="FloorSquare" type="StaticBody3D" unique_id=2015322344 node_paths=PackedStringArray("mesh")]
+script = ExtResource("1_467n7")
+mesh = NodePath("MeshInstance3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="." unique_id=519908929]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.004)
+shape = SubResource("BoxShape3D_m0c6a")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="." unique_id=1713090248]
+material_override = SubResource("StandardMaterial3D_467n7")
+mesh = SubResource("BoxMesh_467n7")

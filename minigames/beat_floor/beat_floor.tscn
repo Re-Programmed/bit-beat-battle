@@ -1,0 +1,118 @@
+[gd_scene format=3 uid="uid://b6ni81gcfy6ab"]
+
+[ext_resource type="Script" uid="uid://1wuswge3q1p6" path="res://scripts/objects/characters/BillboardPlayer.cs" id="1_i6k8p"]
+[ext_resource type="Script" uid="uid://dkjlkkf742g13" path="res://scripts/gui/BeatDisplay.cs" id="2_3ibwb"]
+[ext_resource type="Script" uid="uid://beygqyue632h" path="res://scripts/camera/PlayerOrbitCamera.cs" id="2_r3eh4"]
+[ext_resource type="Script" uid="uid://cdkopersx70x4" path="res://scripts/minigames/beat_floor/FloorGenerator.cs" id="3_bfk3r"]
+[ext_resource type="Script" uid="uid://de8pgyaoigpem" path="res://scripts/minigames/beat_floor/BeatFloorManager.cs" id="3_ybhoo"]
+[ext_resource type="Texture2D" uid="uid://tvmjois3sc0e" path="res://textures/minigames/beat_floor/floors/floor_happy.png" id="4_bfk3r"]
+[ext_resource type="Script" uid="uid://cxlie26o5k7nc" path="res://scripts/gui/MessageBoard.cs" id="5_pnm8i"]
+[ext_resource type="Script" uid="uid://blk3cat8q0ebh" path="res://scripts/objects/DeathTrigger.cs" id="7_e4vx4"]
+[ext_resource type="Script" uid="uid://bqsnad6fc8kr5" path="res://scripts/audio/MusicManager.cs" id="7_ukrch"]
+[ext_resource type="Resource" uid="uid://c3dwca6lodjom" path="res://audio/music/test_120_bpm.tres" id="8_kcn1q"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_nsbsk"]
+size = Vector3(1, 1, 0.11425781)
+
+[sub_resource type="QuadMesh" id="QuadMesh_2yx5h"]
+
+[sub_resource type="QuadMesh" id="QuadMesh_mmrcp"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ukrch"]
+size = Vector3(394.417, 0.31860352, 445.67676)
+
+[node name="BeatFloor" type="Node3D" unique_id=1422193381]
+
+[node name="MainCanvas" type="CanvasLayer" parent="." unique_id=1787589872]
+
+[node name="MessageBoard" type="VBoxContainer" parent="MainCanvas" unique_id=1126208701]
+clip_contents = true
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -590.0
+offset_right = -8.0
+offset_bottom = 327.0
+grow_horizontal = 0
+script = ExtResource("5_pnm8i")
+MessageTypes = PackedStringArray("res://objects/gui/messages/text_message.tscn", "res://objects/gui/messages/one_player_death_message.tscn")
+
+[node name="BeatDisplay" type="HBoxContainer" parent="MainCanvas" unique_id=255552242]
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -340.0
+offset_top = -118.0
+offset_right = 340.0
+offset_bottom = -78.0
+grow_horizontal = 2
+grow_vertical = 0
+pivot_offset = Vector2(316, 108)
+alignment = 1
+script = ExtResource("2_3ibwb")
+beatPulseAnimation = "beat_pulse"
+beatIdleAnimation = "beat_idle"
+beatGraphicScene = "uid://baduada6bjtjr"
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="." unique_id=446317793]
+transform = Transform3D(0.9380402, -0.10948405, 0.32877618, 8.256625e-09, 0.9487767, 0.31594712, -0.34652638, -0.2963712, 0.88999075, 0, 6.2936325, 0)
+
+[node name="BillboardPlayer" type="CharacterBody3D" parent="." unique_id=1115812696]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2.5738864, 0)
+script = ExtResource("1_i6k8p")
+speed = 35.0
+terminalMovementSpeed = 4.25
+jumpHeight = 250.0
+maxJumpHoldLength = 0.2
+
+[node name="CollisionShape" type="CollisionShape3D" parent="BillboardPlayer" unique_id=1461817989]
+shape = SubResource("BoxShape3D_nsbsk")
+
+[node name="FrontMesh" type="MeshInstance3D" parent="BillboardPlayer" unique_id=1708534103]
+mesh = SubResource("QuadMesh_2yx5h")
+
+[node name="BackMesh" type="MeshInstance3D" parent="BillboardPlayer" unique_id=2022032978]
+transform = Transform3D(-1, 0, -8.742278e-08, 0, 1, 0, 8.742278e-08, 0, -1, 0, 0, 0)
+mesh = SubResource("QuadMesh_mmrcp")
+
+[node name="CameraHolder" type="Node3D" parent="." unique_id=1365412428]
+
+[node name="MainCamera" type="Camera3D" parent="CameraHolder" unique_id=1023899923 node_paths=PackedStringArray("player", "anchor")]
+transform = Transform3D(1, 0, 0, 0, 0.8829476, 0.4694716, 0, -0.4694716, 0.8829476, -0.02965355, 4.851853, 2.4113488)
+script = ExtResource("2_r3eh4")
+player = NodePath("../../BillboardPlayer")
+anchor = NodePath("..")
+zoomSpeed = 0.25
+rotateSpeed = 0.4
+lerpSpeed = 5.0
+
+[node name="MinigameManager" type="Node" parent="." unique_id=1082646794]
+script = ExtResource("3_ybhoo")
+
+[node name="FloorGenerator" type="Node" parent="MinigameManager" unique_id=678733979]
+script = ExtResource("3_bfk3r")
+testFloor = ExtResource("4_bfk3r")
+floorSquareObject = "res://minigames/beat_floor/floor_square.tscn"
+floorScale = Vector2(1.5, 1.5)
+
+[node name="MusicManager" type="Node" parent="MinigameManager" unique_id=1996337344 node_paths=PackedStringArray("bgMusicPlayer")]
+script = ExtResource("7_ukrch")
+initalAudio = ExtResource("8_kcn1q")
+bgMusicPlayer = NodePath("BGMusicPlayer")
+
+[node name="BGMusicPlayer" type="AudioStreamPlayer" parent="MinigameManager/MusicManager" unique_id=1671179580]
+max_polyphony = 2
+bus = &"Music"
+
+[node name="DeathTrigger" type="Area3D" parent="." unique_id=1260283659]
+script = ExtResource("7_e4vx4")
+deathReason = 1
+
+[node name="Shape" type="CollisionShape3D" parent="DeathTrigger" unique_id=1128361449]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -6.8831024, 0)
+shape = SubResource("BoxShape3D_ukrch")
+
+[connection signal="OnBeat" from="MinigameManager/MusicManager" to="MainCanvas/BeatDisplay" method="_on_beat"]
+[connection signal="OnSongChange" from="MinigameManager/MusicManager" to="MainCanvas/BeatDisplay" method="_on_song_change"]

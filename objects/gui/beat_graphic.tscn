@@ -1,0 +1,237 @@
+[gd_scene format=3 uid="uid://baduada6bjtjr"]
+
+[ext_resource type="Script" uid="uid://blndl5rnn23qk" path="res://scripts/gui/BeatGraphic.cs" id="1_l4pq1"]
+[ext_resource type="Texture2D" uid="uid://d1xask5vnxmay" path="res://textures/gui/beat_indicator.png" id="2_4o7pe"]
+[ext_resource type="Texture2D" uid="uid://uf4wo8im5ndn" path="res://textures/gui/eighth_indicatior.png" id="3_7013b"]
+[ext_resource type="Texture2D" uid="uid://bbcx33l3byicx" path="res://textures/gui/beat_indicator_highlight.png" id="4_q1mhj"]
+[ext_resource type="Script" uid="uid://c72p1d0a0wugt" path="res://scripts/util/AnimationRandomizer.cs" id="5_4o7pe"]
+
+[sub_resource type="Animation" id="Animation_hg5us"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Beat:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0.8, 0.8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Beat:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("2_4o7pe")]
+}
+
+[sub_resource type="Animation" id="Animation_dubxe"]
+resource_name = "beat_idle"
+length = 8.0
+loop_mode = 1
+
+[sub_resource type="Animation" id="Animation_k7enf"]
+resource_name = "beat_pulse"
+length = 4.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Beat:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3, 4),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(0.8, 0.8), Vector2(1, 1), Vector2(0.8, 0.8), Vector2(1, 1), Vector2(0.8, 0.8)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Beat:texture")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [ExtResource("4_q1mhj"), ExtResource("4_q1mhj")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_k7enf"]
+_data = {
+&"RESET": SubResource("Animation_hg5us"),
+&"beat_idle": SubResource("Animation_dubxe"),
+&"beat_pulse": SubResource("Animation_k7enf")
+}
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_l4pq1"]
+animation = &"RESET"
+
+[sub_resource type="AnimationNodeAnimation" id="AnimationNodeAnimation_yaaxj"]
+animation = &"beat_pulse"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_4o7pe"]
+advance_mode = 2
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_7013b"]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id="AnimationNodeStateMachineTransition_q1mhj"]
+xfade_time = 0.25
+
+[sub_resource type="AnimationNodeStateMachine" id="AnimationNodeStateMachine_j4l8u"]
+states/Start/position = Vector2(303, 60)
+states/beat_idle/node = SubResource("AnimationNodeAnimation_l4pq1")
+states/beat_idle/position = Vector2(412, 60)
+states/beat_pulse/node = SubResource("AnimationNodeAnimation_yaaxj")
+states/beat_pulse/position = Vector2(412, 159)
+transitions = ["Start", "beat_idle", SubResource("AnimationNodeStateMachineTransition_4o7pe"), "beat_idle", "beat_pulse", SubResource("AnimationNodeStateMachineTransition_7013b"), "beat_pulse", "beat_idle", SubResource("AnimationNodeStateMachineTransition_q1mhj")]
+
+[sub_resource type="Animation" id="Animation_t42e1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Beat:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+
+[sub_resource type="Animation" id="Animation_ajr1m"]
+resource_name = "beat_idle"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Beat:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 6.2831855]
+}
+
+[sub_resource type="Animation" id="Animation_7013b"]
+resource_name = "beat_idle_faster"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Beat:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.7853981633974483, 7.0685834705770345]
+}
+
+[sub_resource type="Animation" id="Animation_q1mhj"]
+resource_name = "beat_idle_offset2"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Beat:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.5235987755982988, 6.806784082777885]
+}
+
+[sub_resource type="Animation" id="Animation_6jgu8"]
+resource_name = "beat_idle_offset3"
+length = 8.0
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("../Beat:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.0471975511965976, 7.3303828583761845]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_6jgu8"]
+_data = {
+&"RESET": SubResource("Animation_t42e1"),
+&"beat_idle": SubResource("Animation_ajr1m"),
+&"beat_idle_offset1": SubResource("Animation_7013b"),
+&"beat_idle_offset2": SubResource("Animation_q1mhj"),
+&"beat_idle_offset3": SubResource("Animation_6jgu8")
+}
+
+[node name="BeatGraphic" type="Control" unique_id=950054003 node_paths=PackedStringArray("Beat", "Eighth", "Animator")]
+custom_minimum_size = Vector2(84, 42)
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_l4pq1")
+Beat = NodePath("Beat")
+Eighth = NodePath("Eighth")
+Animator = NodePath("AnimationPlayer/AnimationTree")
+
+[node name="Beat" type="TextureRect" parent="." unique_id=1598909538]
+texture_filter = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.5
+anchor_bottom = 0.5
+offset_top = -20.0
+offset_right = 40.0
+offset_bottom = 20.0
+grow_vertical = 2
+scale = Vector2(0.8, 0.8)
+pivot_offset = Vector2(20, 20)
+texture = ExtResource("2_4o7pe")
+expand_mode = 2
+
+[node name="Eighth" type="TextureRect" parent="." unique_id=282630707]
+texture_filter = 1
+layout_mode = 0
+offset_left = 44.0
+offset_right = 84.0
+offset_bottom = 40.0
+texture = ExtResource("3_7013b")
+expand_mode = 2
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1484400976]
+libraries/ = SubResource("AnimationLibrary_k7enf")
+autoplay = &"RESET"
+
+[node name="AnimationTree" type="AnimationTree" parent="AnimationPlayer" unique_id=51968888]
+root_node = NodePath("../..")
+tree_root = SubResource("AnimationNodeStateMachine_j4l8u")
+anim_player = NodePath("..")
+
+[node name="IdlePlayer" type="AnimationPlayer" parent="AnimationPlayer" unique_id=2036093581]
+libraries/ = SubResource("AnimationLibrary_6jgu8")
+autoplay = &"beat_idle"
+script = ExtResource("5_4o7pe")
+potentialAnimations = [null, null, null, null]

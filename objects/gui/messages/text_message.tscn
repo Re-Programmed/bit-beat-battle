@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://c0u5187kdt2k3"]
+
+[ext_resource type="Script" uid="uid://clbr1wi8xs15p" path="res://scripts/gui/Message.cs" id="1_4w0xb"]
+
+[node name="Message" type="RichTextLabel" unique_id=1206385901]
+bbcode_enabled = true
+text = "___ was killed by ___"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
+horizontal_alignment = 2
+script = ExtResource("1_4w0xb")
+
+[node name="KillTimer" type="Timer" parent="." unique_id=1924165218]
+wait_time = 3.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="KillTimer" to="." method="_on_kill_timer_end"]
